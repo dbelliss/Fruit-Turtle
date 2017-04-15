@@ -19,6 +19,10 @@ public class Floor : MonoBehaviour {
 			
 		}
 		else {
+			if (other.gameObject.tag == "BadItem") {
+				GameManager.losePoints (other.gameObject.GetComponent<Item> ().points);
+			}
+
 			Destroy (other.gameObject);
 		}
 	}
