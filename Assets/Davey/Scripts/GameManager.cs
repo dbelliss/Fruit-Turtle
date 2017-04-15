@@ -34,6 +34,10 @@ public class GameManager : MonoBehaviour {
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        Destroy(collision.gameObject);
+		if (collision.tag.Contains ("Player")) {
+			return;
+		}
+		else
+        	Destroy(collision.gameObject);
     }
 }

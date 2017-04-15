@@ -28,7 +28,12 @@ public class Projectile : MonoBehaviour {
     }
 
 	void OnTriggerEnter2D(Collider2D other) {
-		if (other.tag.Contains("Item")) {
+		if (other.tag == "PointItem") {
+			GameManager.losePoints (other.gameObject.GetComponent<Item> ().points);
+			Destroy (other.gameObject);
+			Destroy (this.gameObject);
+		}
+		else if (other.tag == "BadItem") {
 			Destroy (other.gameObject);
 			Destroy (this.gameObject);
 		}

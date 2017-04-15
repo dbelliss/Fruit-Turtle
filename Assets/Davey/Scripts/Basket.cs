@@ -6,22 +6,19 @@ public class Basket : MonoBehaviour {
 
 	private void OnTriggerEnter2D(Collider2D other)
 	{
-		
-		int pts = other.gameObject.GetComponent<Item> ().points;
+		if (other.tag.Contains ("Item")) {
+			int pts = other.gameObject.GetComponent<Item> ().points;
 
-		string tag = other.gameObject.tag;
-		if (tag == "PointItem")
-		{
-			GameManager.addPoints (pts);
-			Destroy (other.gameObject);
-		}
-		else if (tag == "BadItem")
-		{
-			GameManager.losePoints (pts);
-			Destroy (other.gameObject);
-		}
-		else {
-			Debug.Log ("UNKNOWN TAG: " + tag);
+			string tag = other.gameObject.tag;
+			if (tag == "PointItem") {
+				GameManager.addPoints (pts);
+				Destroy (other.gameObject);
+			} else if (tag == "BadItem") {
+				GameManager.losePoints (pts);
+				Destroy (other.gameObject);
+			} else {
+				Debug.Log ("UNKNOWN TAG: " + tag);
+			}
 		}
 	}
 }
