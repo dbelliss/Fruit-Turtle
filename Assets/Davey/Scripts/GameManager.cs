@@ -29,7 +29,11 @@ public class GameManager : MonoBehaviour {
 			Debug.Log ("You Lose");
 		}
 	}
-	
-	// Update is called once per frame
 
+    // Update is called once per frame
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        Destroy(collision.gameObject);
+    }
 }
