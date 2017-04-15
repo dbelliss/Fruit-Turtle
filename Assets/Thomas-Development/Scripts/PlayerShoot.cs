@@ -6,6 +6,8 @@ public class PlayerShoot : MonoBehaviour {
 
     public GameObject cannon;
     private Vector3 direction;
+    public GameObject cannonball;
+    public GameObject cannonEnd;
 
 	// Use this for initialization
 	void Start () {
@@ -18,10 +20,21 @@ public class PlayerShoot : MonoBehaviour {
         mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0);
         mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
         direction = mousePosition - cannon.transform.position;
+        direction = direction.normalized;
+
+        if (Input.GetButtonDown("Fire1"))
+        {
+            Instantiate(cannonball, cannonEnd.transform.position, Quaternion.identity);
+        }
 	}
 
     private void FixedUpdate()
     {
         cannon.transform.rotation = Quaternion.LookRotation(Vector3.forward,direction);
+    }
+
+    public Vector3 GetDirection()
+    {
+        return direction;
     }
 }
