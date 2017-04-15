@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 	static public int pointsToWin = 10;
-
 	static private int curPoints = 0;
-
 
 	// Use this for initialization
 	void Start () {
