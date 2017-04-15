@@ -20,6 +20,7 @@ public class PlayerShoot : MonoBehaviour {
         mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0);
         mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
         direction = mousePosition - cannon.transform.position;
+        direction = direction.normalized;
 
         if (Input.GetButtonDown("Fire1"))
         {
@@ -30,5 +31,10 @@ public class PlayerShoot : MonoBehaviour {
     private void FixedUpdate()
     {
         cannon.transform.rotation = Quaternion.LookRotation(Vector3.forward,direction);
+    }
+
+    public Vector3 GetDirection()
+    {
+        return direction;
     }
 }
