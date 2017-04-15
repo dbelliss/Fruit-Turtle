@@ -26,4 +26,11 @@ public class Projectile : MonoBehaviour {
     {
         cannonballRB.velocity = cannonDirection * speed * Time.deltaTime;
     }
+
+	void OnTriggerEnter2D(Collider2D other) {
+		if (other.tag.Contains("Item")) {
+			Destroy (other.gameObject);
+			Destroy (this.gameObject);
+		}
+	}
 }

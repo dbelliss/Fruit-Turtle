@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Item : MonoBehaviour {
 	public int points = 1;
-	public float angularSpeed;
+	private float angularSpeed;
 	private Transform trans;
 	// Use this for initialization
 	void Start () {
-		angularSpeed = Random.Range (1f, 20f);
+		angularSpeed = Random.Range (4f, 10f);
 		trans = GetComponent<Transform> ();
 	}
 	

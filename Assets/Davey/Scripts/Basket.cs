@@ -6,7 +6,9 @@ public class Basket : MonoBehaviour {
 
 	private void OnTriggerEnter2D(Collider2D other)
 	{
+		
 		int pts = other.gameObject.GetComponent<Item> ().points;
+
 		string tag = other.gameObject.tag;
 		if (tag == "PointItem")
 		{
