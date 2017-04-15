@@ -15,7 +15,6 @@ public class Floor : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D(Collision2D other) {
-		Debug.Log ("Col");
 		if (other.gameObject.tag == "Player"){
 			
 		}

@@ -8,7 +8,6 @@ public class Basket : MonoBehaviour {
 	{
 		int pts = other.gameObject.GetComponent<Item> ().points;
 		string tag = other.gameObject.tag;
-		Debug.Log("ENTERED");
 		if (tag == "PointItem")
 		{
 			GameManager.addPoints (pts);

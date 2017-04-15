@@ -6,7 +6,6 @@ public class SwitchItems : MonoBehaviour {
 
     public GameObject cannon;
     public GameObject basket;
-    public GameObject pointLine;
 
 	// Use this for initialization
 	void Start () {
@@ -21,13 +20,11 @@ public class SwitchItems : MonoBehaviour {
             {
                 cannon.SetActive(false);
                 basket.SetActive(true);
-                pointLine.SetActive(true);
             }
             else
             {
                 cannon.SetActive(true);
                 basket.SetActive(false);
-                pointLine.SetActive(false);
             }
         }
 	}

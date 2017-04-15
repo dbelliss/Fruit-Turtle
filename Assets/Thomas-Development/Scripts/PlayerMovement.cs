@@ -21,7 +21,6 @@ public class PlayerMovement : MonoBehaviour {
 	}
 	// Update is called once per frame
 	void Update () {
-		Debug.Log (playerRB.velocity.x);
 		if (Input.GetAxis("Horizontal") > 0) {
 			if (isMovingRight == false) {
 				flip ();
