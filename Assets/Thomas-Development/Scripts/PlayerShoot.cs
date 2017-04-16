@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerShoot : MonoBehaviour {
 
-    public GameObject cannon;
+    public GameObject pivot;
     private Vector3 direction;
     public GameObject cannonball;
     public GameObject cannonEnd;
@@ -16,11 +16,11 @@ public class PlayerShoot : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(cannon.activeInHierarchy) {
+		if(cannonEnd.activeInHierarchy) {
         Vector3 mousePosition;
         mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0);
         mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
-        direction = mousePosition - cannon.transform.position;
+        direction = mousePosition - pivot.transform.position;
         direction = direction.normalized;
 
 			if (Input.GetButtonDown ("Fire1")) {
@@ -32,8 +32,8 @@ public class PlayerShoot : MonoBehaviour {
 
     private void FixedUpdate()
 	{
-		if (cannon.activeInHierarchy) {
-			cannon.transform.rotation = Quaternion.LookRotation (Vector3.forward, direction);
+		if (pivot.activeInHierarchy) {
+			pivot.transform.rotation = Quaternion.LookRotation (Vector3.forward, direction);
 		}
 	}
     public Vector3 GetDirection()
