@@ -16,13 +16,13 @@ public class Floor : MonoBehaviour {
 
 	void OnCollisionEnter2D(Collision2D other) {
 		if (other.gameObject.tag == "Player"){
-			
+			return;
 		}
 		else {
 			if (other.gameObject.tag == "BadItem") {
 				GameManager.losePoints (other.gameObject.GetComponent<Item> ().points);
 			}
-
+			GetComponent<AudioSource> ().Play ();
 			Destroy (other.gameObject);
 		}
 	}
