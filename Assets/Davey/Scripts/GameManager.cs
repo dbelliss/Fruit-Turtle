@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour {
 	private ScoreManager sm;
 
 	void Start () {
+		isActive = true;
 		sm = sb.GetComponent<ScoreManager> ();
 //		sm.resetScoreBoard ();
 		scoreText = GameObject.FindGameObjectWithTag ("scoreText").GetComponent<Text> ();
@@ -20,8 +21,13 @@ public class GameManager : MonoBehaviour {
 			Debug.Log ("Could not find score text");
 		}
 	}
+
+	void Awake() {
+		isActive = true;
+	}
 		
 	void Update() {
+		Debug.Log (curPoints);
 		if (Input.GetAxis("Reset") != 0) {
 			curPoints = 0;
 			SceneManager.LoadScene (0);

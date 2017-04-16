@@ -8,20 +8,23 @@ public class ScoreManager : MonoBehaviour {
 	public GameObject inp;
 	public GameObject restart;
 	public GameObject highScoreText;
-	int currentHigh;
-	int currentLow;
+	private float finalScore;
+	float currentHigh;
+	float currentLow;
 
 	void Start() {
 		string highScoreKey = "HighScore"+(0+1).ToString();
-		currentHigh = PlayerPrefs.GetInt (highScoreKey,0);
-		currentLow = PlayerPrefs.GetInt ("HighScore5",0);
+		currentHigh = PlayerPrefs.GetFloat (highScoreKey,0);
+		currentLow = PlayerPrefs.GetFloat ("HighScore5",0);
 		Debug.Log("LOW:" + currentLow.ToString());
 		highScoreText.GetComponent<Text> ().text = "High Score: " + currentHigh.ToString ();;
 	}
 
 	public void endGame() {
+		finalScore = Time.timeSinceLevelLoad;
 		printHighScores ();
-		if (currentLow > GameManager.GetCurrentPoints ()) { 
+
+		if (currentLow > finalScore) { 
 			inp.SetActive (true);
 		} else
 			restart.SetActive (true);
@@ -32,18 +35,17 @@ public class ScoreManager : MonoBehaviour {
 		string name = GameObject.FindWithTag ("NameInput2").GetComponent<Text> ().text;
 		Debug.Log (name);
 		inp.SetActive (false);
-		Text highScoresText = scoreBoard.GetComponent<Text> ();
-		int[] highScores = new int[5];
-		int score = (int)Time.timeSinceLevelLoad;
+		float[] highScores = new float[5];
+		float score = finalScore;
 		for (int i= 0; i < highScores.Length; i++){
 			string highScoreKey = "HighScore"+(i+1).ToString();
 			string nameKey = "Name" + (i + 1).ToString ();
-			int highScore = PlayerPrefs.GetInt(highScoreKey,0); 
+			float highScore = PlayerPrefs.GetFloat(highScoreKey,0f); 
 			string namescore = PlayerPrefs.GetString(nameKey);
 			if(score < highScore){
-				int temp = highScore;
+				float temp = highScore;
 				string stemp = namescore;
-				PlayerPrefs.SetInt (highScoreKey, score);
+				PlayerPrefs.SetFloat (highScoreKey, score);
 				PlayerPrefs.SetString (nameKey, name);
 				score = temp;
 				name = stemp;
@@ -53,13 +55,11 @@ public class ScoreManager : MonoBehaviour {
 	}
 
 	public void resetScoreBoard() {
-		Text highScoresText = scoreBoard.GetComponent<Text> ();
-
-		int[] highScores = new int[5];
+		float[] highScores = new float[5];
 		for (int i= 0; i < highScores.Length; i++){
 			string highScoreKey = "HighScore"+(i+1).ToString();
 			string nameKey = "Name" + (i + 1).ToString ();
-			PlayerPrefs.SetInt (highScoreKey, 9999);
+			PlayerPrefs.SetFloat (highScoreKey, 9999);
 			PlayerPrefs.SetString (nameKey, "Unknown");
 		}
 	}
@@ -69,12 +69,12 @@ public class ScoreManager : MonoBehaviour {
 		Text highScoresText = scoreBoard.GetComponent<Text> ();
 		highScoresText.text = "High Scores: \n";
 		scoreBoard.SetActive (true);
-		int[] highScores = new int[5];
+		float[] highScores = new float[5];
 		for (int i= 0; i < highScores.Length; i++){
 
 			string highScoreKey = "HighScore"+(i+1).ToString();
 			string nameKey = "Name" + (i + 1).ToString ();
-			int highScore = PlayerPrefs.GetInt(highScoreKey,0);
+			float highScore = PlayerPrefs.GetFloat(highScoreKey,0);
 			string name = PlayerPrefs.GetString (nameKey, "none");
 			highScoresText.text += ((i + 1).ToString() + ": " + name.ToString() + " " 
 				+ highScore.ToString() + " seconds\n");

@@ -15,6 +15,16 @@ public class MainMenu : MonoBehaviour {
 		
 	}
 
+	public void resetScoreBoard() {
+		float[] highScores = new float[5];
+		for (int i= 0; i < highScores.Length; i++){
+			string highScoreKey = "HighScore"+(i+1).ToString();
+			string nameKey = "Name" + (i + 1).ToString ();
+			PlayerPrefs.SetFloat (highScoreKey, 9999);
+			PlayerPrefs.SetString (nameKey, "Unknown");
+		}
+	}
+
 	public void load() {
 		SceneManager.LoadScene (1);
 	}
