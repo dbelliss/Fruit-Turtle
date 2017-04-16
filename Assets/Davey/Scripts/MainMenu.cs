@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 
 public class MainMenu : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
+    public Slider difficultySlider;
+
+    // Use this for initialization
+    void Start () {
 		InitScoreBoard ();
         Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
     }
@@ -27,8 +30,9 @@ public class MainMenu : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		
-	}
+        string difficultyKey = "difficulty";
+        PlayerPrefs.SetFloat(difficultyKey, 1.0f - difficultySlider.value);
+    }
 
 	public void resetScoreBoard() {
 		float[] highScores = new float[5];

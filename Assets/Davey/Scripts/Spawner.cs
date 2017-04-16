@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour {
 	public float frequency;
-	public float goodChance = .5f;
+	public float goodChance;
 	public GameObject[] fruits;
 	public GameObject[] obstacles;
 	public Vector2 left;
@@ -18,8 +18,9 @@ public class Spawner : MonoBehaviour {
 		left = this.gameObject.transform.position - new Vector3((bc2d.size.x / 2),0);
 		right = this.gameObject.transform.position + new Vector3((bc2d.size.x / 2),0);
 		StartCoroutine (spawn ());//Spawns things
-
-	}
+        string difficultyKey = "difficulty";
+        goodChance = PlayerPrefs.GetFloat(difficultyKey);
+    }
 	
 	// Update is called once per frame
 	void Update () {
