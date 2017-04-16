@@ -8,33 +8,27 @@ public class GameManager : MonoBehaviour {
 	static public int pointsToWin = 10;
 	static private int curPoints = 0;
 	static private Text scoreText;
-
+	public GameObject sb;
+	private ScoreManager sm;
+	public GameObject inp;
 	// Use this for initialization
 
 
 	void Start () {
+		
+		sm = sb.GetComponent<ScoreManager> ();
+//		sm.resetScoreBoard ();
 		scoreText = GameObject.FindGameObjectWithTag ("scoreText").GetComponent<Text> ();
 		if (scoreText == null) {
 			Debug.Log ("Could not find score text");
 		}
-		printHighScores ();
+//		sm.printHighScores ();
 	}
-	void printHighScores() {
-		int[] highScores = new int[5];
-		for (int i= 0; i < highScores.Length; i++){
-
-			//Get the highScore from 1 - 5
-			string highScoreKey = "HighScore"+(i+1).ToString();
-			int highScore = PlayerPrefs.GetInt(highScoreKey,0);
-			Debug.Log (i.ToString() + " " + highScore.ToString());
-
-		}
-	}
-
+		
 	void Update() {
+		Debug.Log ("TIME " + Time.timeSinceLevelLoad);
 		Debug.Log (curPoints); 
 		if (Input.GetAxis("Reset") != 0) {
-			updateScoreBoard ();
 			curPoints = 0;
 			Application.LoadLevel(Application.loadedLevel);
 		}
@@ -49,32 +43,12 @@ public class GameManager : MonoBehaviour {
 		curPoints += pts;
 		updatePoints ();
 		if (curPoints > pointsToWin) {
-			updateScoreBoard ();
+			GameObject.FindWithTag("ScoreManager").gameObject.GetComponent<ScoreManager>().endGame();
 			Debug.Log ("YOU WIN");
 		}
 	}
 
-	static void updateScoreBoard() {
-		int[] highScores = new int[5];
-		int score = (int)Time.timeSinceLevelLoad;
-		for (int i= 0; i < highScores.Length; i++){
-			
-			//Get the highScore from 1 - 5
-			string highScoreKey = "HighScore"+(i+1).ToString();
-			int highScore = PlayerPrefs.GetInt(highScoreKey,0);
-			//if score is greater, store previous highScore
-			//Set new highScore
-			//set score to previous highScore, and try again
-			//Once score is greater, it will always be for the
-			//remaining list, so the top 5 will always be 
-			//updated
-			if(score>highScore){
-				int temp = highScore;
-				PlayerPrefs.SetInt (highScoreKey, score);
-				score = temp;
-			}
-		}
-	}
+
 
 	static public void losePoints(int pts) {
 		curPoints -= pts;
