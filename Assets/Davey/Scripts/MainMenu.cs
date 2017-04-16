@@ -8,9 +8,10 @@ using UnityEngine.UI;
 public class MainMenu : MonoBehaviour {
 
     public Slider difficultySlider;
-
+	float prevDifficulty;
     // Use this for initialization
     void Start () {
+		prevDifficulty = .25f;
 		InitScoreBoard ();
         Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
     }
@@ -28,8 +29,16 @@ public class MainMenu : MonoBehaviour {
 		}
 	}
 
+	void Awake() {
+		resetScoreBoard ();
+	}
+
 	// Update is called once per frame
 	void Update () {
+		if (difficultySlider.value != prevDifficulty) {
+			InitScoreBoard ();
+			prevDifficulty = difficultySlider.value;
+		}
         string difficultyKey = "difficulty";
         PlayerPrefs.SetFloat(difficultyKey, 1.0f - difficultySlider.value);
     }
