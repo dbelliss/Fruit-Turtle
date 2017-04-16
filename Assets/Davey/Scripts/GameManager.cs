@@ -11,13 +11,10 @@ public class GameManager : MonoBehaviour {
 	static private Text scoreText;
 	public GameObject sb;
 	private ScoreManager sm;
-	public GameObject inp;
-	// Use this for initialization
-
 
 	void Start () {
 		sm = sb.GetComponent<ScoreManager> ();
-		sm.resetScoreBoard ();
+//		sm.resetScoreBoard ();
 		scoreText = GameObject.FindGameObjectWithTag ("scoreText").GetComponent<Text> ();
 		if (scoreText == null) {
 			Debug.Log ("Could not find score text");
@@ -28,8 +25,9 @@ public class GameManager : MonoBehaviour {
 		Debug.Log (curPoints); 
 		if (Input.GetAxis("Reset") != 0) {
 			curPoints = 0;
-			Application.LoadLevel(Application.loadedLevel);
+			SceneManager.LoadScene (0);
 		}
+		scoreText.text = "Time: " + Time.timeSinceLevelLoad.ToString ();
 	}
 
 	static void updatePoints(){
@@ -40,7 +38,7 @@ public class GameManager : MonoBehaviour {
 	static public void addPoints(int pts) {
 		if (isActive == true) {
 			curPoints += pts;
-			updatePoints ();
+
 			if (curPoints > pointsToWin && isActive == true) {
 				GameObject.FindWithTag ("ScoreManager").gameObject.GetComponent<ScoreManager> ().endGame ();
 				Debug.Log ("YOU WIN");
@@ -55,7 +53,7 @@ public class GameManager : MonoBehaviour {
 	static public void losePoints(int pts) {
 		if (isActive == true) {
 			curPoints -= pts;
-			updatePoints ();
+
 		}
 	}
 
