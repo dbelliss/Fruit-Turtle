@@ -6,9 +6,26 @@ using UnityEngine.UI;
 public class ScoreManager : MonoBehaviour {
 	public GameObject scoreBoard;
 	public GameObject inp;
+	public GameObject restart;
+	public GameObject highScoreText;
+	int currentHigh;
+	int currentLow;
+
+	void Start() {
+		string highScoreKey = "HighScore"+(0+1).ToString();
+		currentHigh = PlayerPrefs.GetInt (highScoreKey,0);
+		currentLow = PlayerPrefs.GetInt ("HighScore5",0);
+		Debug.Log("LOW:" + currentLow.ToString());
+		highScoreText.GetComponent<Text> ().text = "High Score: " + currentHigh.ToString ();;
+	}
 
 	public void endGame() {
-		inp.SetActive (true);
+		printHighScores ();
+		if (currentLow > GameManager.GetCurrentPoints ()) { 
+			inp.SetActive (true);
+		} else
+			restart.SetActive (true);
+			
 	}
 
 	public void updateScoreBoard() {
@@ -21,12 +38,15 @@ public class ScoreManager : MonoBehaviour {
 		for (int i= 0; i < highScores.Length; i++){
 			string highScoreKey = "HighScore"+(i+1).ToString();
 			string nameKey = "Name" + (i + 1).ToString ();
-			int highScore = PlayerPrefs.GetInt(highScoreKey,0);
+			int highScore = PlayerPrefs.GetInt(highScoreKey,0); 
+			string namescore = PlayerPrefs.GetString(nameKey);
 			if(score < highScore){
 				int temp = highScore;
+				string stemp = namescore;
 				PlayerPrefs.SetInt (highScoreKey, score);
 				PlayerPrefs.SetString (nameKey, name);
 				score = temp;
+				name = stemp;
 			}
 		}
 		printHighScores ();
@@ -56,8 +76,9 @@ public class ScoreManager : MonoBehaviour {
 			string nameKey = "Name" + (i + 1).ToString ();
 			int highScore = PlayerPrefs.GetInt(highScoreKey,0);
 			string name = PlayerPrefs.GetString (nameKey, "none");
-			highScoresText.text += (i.ToString() + ": " + name.ToString() + " " 
+			highScoresText.text += ((i + 1).ToString() + ": " + name.ToString() + " " 
 				+ highScore.ToString() + " seconds\n");
 		}
+		restart.SetActive(true);
 	}
 }
