@@ -40,6 +40,14 @@ public class MainMenu : MonoBehaviour {
 		}
 	}
 
+	public void quit() {
+		#if UNITY_EDITOR
+		UnityEditor.EditorApplication.isPlaying = false;
+		#else
+		Application.Quit();
+		#endif
+	}
+
 	public void load() {
 		SceneManager.LoadScene (1);
 	}
