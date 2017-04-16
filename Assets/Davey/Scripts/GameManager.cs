@@ -22,7 +22,6 @@ public class GameManager : MonoBehaviour {
 	}
 		
 	void Update() {
-		Debug.Log (curPoints); 
 		if (Input.GetAxis("Reset") != 0) {
 			curPoints = 0;
 			SceneManager.LoadScene (0);

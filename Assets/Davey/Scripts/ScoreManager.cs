@@ -14,8 +14,9 @@ public class ScoreManager : MonoBehaviour {
 	void Start() {
 		string highScoreKey = "HighScore"+(0+1).ToString();
 		currentHigh = PlayerPrefs.GetInt (highScoreKey,0);
-		currentLow = PlayerPrefs.GetInt ("HighScore6",0);
-		highScoreText.GetComponent<Text> ().text = "High Scrore: " + currentHigh.ToString ();;
+		currentLow = PlayerPrefs.GetInt ("HighScore5",0);
+		Debug.Log("LOW:" + currentLow.ToString());
+		highScoreText.GetComponent<Text> ().text = "High Score: " + currentHigh.ToString ();;
 	}
 
 	public void endGame() {
@@ -37,12 +38,15 @@ public class ScoreManager : MonoBehaviour {
 		for (int i= 0; i < highScores.Length; i++){
 			string highScoreKey = "HighScore"+(i+1).ToString();
 			string nameKey = "Name" + (i + 1).ToString ();
-			int highScore = PlayerPrefs.GetInt(highScoreKey,0);
+			int highScore = PlayerPrefs.GetInt(highScoreKey,0); 
+			string namescore = PlayerPrefs.GetString(nameKey);
 			if(score < highScore){
 				int temp = highScore;
+				string stemp = namescore;
 				PlayerPrefs.SetInt (highScoreKey, score);
 				PlayerPrefs.SetString (nameKey, name);
 				score = temp;
+				name = stemp;
 			}
 		}
 		printHighScores ();
