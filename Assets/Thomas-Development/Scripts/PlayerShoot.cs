@@ -11,10 +11,14 @@ public class PlayerShoot : MonoBehaviour {
     public float pullRadius;
     public float pullForce;
     private Vector3 mousePosition;
-
+	private AudioSource[] audio; 
+	private AudioSource cannon;
+	private AudioSource tk;
     // Use this for initialization
     void Start () {
-		
+		audio = GetComponents<AudioSource> ();
+		cannon = audio [0];
+		tk = audio [1];
 	}
 	
 	// Update is called once per frame
@@ -25,6 +29,7 @@ public class PlayerShoot : MonoBehaviour {
         direction = direction.normalized;
 
 		if (Input.GetButtonDown ("Fire1") && cannonEnd.activeInHierarchy) {
+			cannon.Play ();
 			Instantiate (cannonball, cannonEnd.transform.position, Quaternion.identity);
 	    }
 	}
@@ -38,6 +43,9 @@ public class PlayerShoot : MonoBehaviour {
         // FORCE PULL
         if (Input.GetButton("Fire1") && !cannonEnd.activeInHierarchy)
         {
+			if (!tk.isPlaying) {
+				tk.Play ();
+			}
             Collider2D[] colliderArray;
 
             colliderArray = Physics2D.OverlapCircleAll(mousePosition, pullRadius);

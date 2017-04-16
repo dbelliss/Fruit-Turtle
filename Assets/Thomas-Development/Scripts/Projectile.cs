@@ -10,6 +10,7 @@ public class Projectile : MonoBehaviour {
     private Vector3 cannonDirection;
     public GameObject explosion;
 
+
 	// Use this for initialization
 	void Start () {
         cannonballRB = GetComponent<Rigidbody2D>();
@@ -35,6 +36,7 @@ public class Projectile : MonoBehaviour {
 			Destroy (this.gameObject);
 		}
 		else if (other.tag == "BadItem") {
+
             Instantiate(explosion, other.transform.position, Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
 			Destroy (other.gameObject);
 			Destroy (this.gameObject);

@@ -6,10 +6,8 @@ public class TimerRemove : MonoBehaviour {
 
     public float timeToRemove;
     private float currentTime;
-
 	// Use this for initialization
 	void Start () {
-		
 	}
 	
 	// Update is called once per frame
