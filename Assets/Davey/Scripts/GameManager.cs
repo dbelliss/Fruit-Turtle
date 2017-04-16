@@ -16,14 +16,12 @@ public class GameManager : MonoBehaviour {
 
 
 	void Start () {
-		
 		sm = sb.GetComponent<ScoreManager> ();
 		sm.resetScoreBoard ();
 		scoreText = GameObject.FindGameObjectWithTag ("scoreText").GetComponent<Text> ();
 		if (scoreText == null) {
 			Debug.Log ("Could not find score text");
 		}
-//		sm.printHighScores ();
 	}
 		
 	void Update() {
@@ -58,9 +56,6 @@ public class GameManager : MonoBehaviour {
 		if (isActive == true) {
 			curPoints -= pts;
 			updatePoints ();
-			if (curPoints < 0) {
-				Debug.Log ("You Lose");
-			}
 		}
 	}
 

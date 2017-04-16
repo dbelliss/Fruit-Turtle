@@ -56,7 +56,8 @@ public class ScoreManager : MonoBehaviour {
 			string nameKey = "Name" + (i + 1).ToString ();
 			int highScore = PlayerPrefs.GetInt(highScoreKey,0);
 			string name = PlayerPrefs.GetString (nameKey, "none");
-			highScoresText.text += (i.ToString() + ": " + name.ToString() + " " + highScore.ToString() + "\n");
+			highScoresText.text += (i.ToString() + ": " + name.ToString() + " " 
+				+ highScore.ToString() + " seconds\n");
 		}
 	}
 }
