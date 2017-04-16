@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement; //reload level
 
 public class GameManager : MonoBehaviour {
+	static bool isActive = true;
 	static public int pointsToWin = 10;
 	static private int curPoints = 0;
 	static private Text scoreText;
@@ -17,7 +18,7 @@ public class GameManager : MonoBehaviour {
 	void Start () {
 		
 		sm = sb.GetComponent<ScoreManager> ();
-//		sm.resetScoreBoard ();
+		sm.resetScoreBoard ();
 		scoreText = GameObject.FindGameObjectWithTag ("scoreText").GetComponent<Text> ();
 		if (scoreText == null) {
 			Debug.Log ("Could not find score text");
@@ -26,7 +27,6 @@ public class GameManager : MonoBehaviour {
 	}
 		
 	void Update() {
-		Debug.Log ("TIME " + Time.timeSinceLevelLoad);
 		Debug.Log (curPoints); 
 		if (Input.GetAxis("Reset") != 0) {
 			curPoints = 0;
@@ -40,21 +40,27 @@ public class GameManager : MonoBehaviour {
 
 
 	static public void addPoints(int pts) {
-		curPoints += pts;
-		updatePoints ();
-		if (curPoints > pointsToWin) {
-			GameObject.FindWithTag("ScoreManager").gameObject.GetComponent<ScoreManager>().endGame();
-			Debug.Log ("YOU WIN");
+		if (isActive == true) {
+			curPoints += pts;
+			updatePoints ();
+			if (curPoints > pointsToWin && isActive == true) {
+				GameObject.FindWithTag ("ScoreManager").gameObject.GetComponent<ScoreManager> ().endGame ();
+				Debug.Log ("YOU WIN");
+				isActive = false;
+			}
 		}
+
 	}
 
 
 
 	static public void losePoints(int pts) {
-		curPoints -= pts;
-		updatePoints ();
-		if (curPoints < 0) {
-			Debug.Log ("You Lose");
+		if (isActive == true) {
+			curPoints -= pts;
+			updatePoints ();
+			if (curPoints < 0) {
+				Debug.Log ("You Lose");
+			}
 		}
 	}
 

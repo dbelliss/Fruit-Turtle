@@ -5,12 +5,16 @@ using UnityEngine.UI;
 
 public class ScoreManager : MonoBehaviour {
 	public GameObject scoreBoard;
+	public GameObject inp;
 
 	public void endGame() {
-		
+		inp.SetActive (true);
 	}
 
-	public void updateScoreBoard(string name) {
+	public void updateScoreBoard() {
+		string name = GameObject.FindWithTag ("NameInput2").GetComponent<Text> ().text;
+		Debug.Log (name);
+		inp.SetActive (false);
 		Text highScoresText = scoreBoard.GetComponent<Text> ();
 		int[] highScores = new int[5];
 		int score = (int)Time.timeSinceLevelLoad;
@@ -41,7 +45,7 @@ public class ScoreManager : MonoBehaviour {
 	}
 
 	public void printHighScores() {
-
+		inp.SetActive (false);
 		Text highScoresText = scoreBoard.GetComponent<Text> ();
 		highScoresText.text = "High Scores: \n";
 		scoreBoard.SetActive (true);
