@@ -69,4 +69,9 @@ public class GameManager : MonoBehaviour {
 		else
         	Destroy(collision.gameObject);
     }
+
+    public static int GetCurrentPoints()
+    {
+        return curPoints;
+    }
 }
