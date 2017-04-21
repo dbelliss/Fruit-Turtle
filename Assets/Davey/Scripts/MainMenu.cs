@@ -12,25 +12,24 @@ public class MainMenu : MonoBehaviour {
     // Use this for initialization
     void Start () {
 		prevDifficulty = .25f;
-		InitScoreBoard ();
+//		InitScoreBoard ();
         Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
     }
 
 	void InitScoreBoard() {
+		Debug.Log ("Initialize board");
 		float[] highScores = new float[5];
 		for (int i= 0; i < highScores.Length; i++){
 			string highScoreKey = "HighScore"+(i+1).ToString();
 			string nameKey = "Name" + (i + 1).ToString ();
-			if (PlayerPrefs.GetFloat (highScoreKey) == 0) {
-				PlayerPrefs.SetFloat (highScoreKey, 9999);
-				PlayerPrefs.SetString (nameKey, "Unknown");
-			}
-
+			PlayerPrefs.SetFloat (highScoreKey, 999f);
+			PlayerPrefs.SetString (nameKey, "Unknown");
 		}
+		PlayerPrefs.Save ();
 	}
 
 	void Awake() {
-		resetScoreBoard ();
+//		resetScoreBoard ();
 	}
 
 	// Update is called once per frame
@@ -48,9 +47,10 @@ public class MainMenu : MonoBehaviour {
 		for (int i= 0; i < highScores.Length; i++){
 			string highScoreKey = "HighScore"+(i+1).ToString();
 			string nameKey = "Name" + (i + 1).ToString ();
-			PlayerPrefs.SetFloat (highScoreKey, 9999);
+			PlayerPrefs.SetFloat (highScoreKey, 9999f);
 			PlayerPrefs.SetString (nameKey, "Unknown");
 		}
+		PlayerPrefs.Save ();
 	}
 
 	public void quit() {

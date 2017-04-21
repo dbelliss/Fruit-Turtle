@@ -58,7 +58,9 @@ public class GameManager : MonoBehaviour {
 	static public void losePoints(int pts) {
 		if (isActive == true) {
 			curPoints -= pts;
-
+			if (curPoints < 0) {
+				curPoints = 0;
+			}
 		}
 	}
 

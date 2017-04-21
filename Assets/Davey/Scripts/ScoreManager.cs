@@ -51,6 +51,7 @@ public class ScoreManager : MonoBehaviour {
 				name = stemp;
 			}
 		}
+		PlayerPrefs.Save ();
 		printHighScores ();
 	}
 
