@@ -8,11 +8,18 @@ using UnityEngine.UI;
 public class MainMenu : MonoBehaviour {
 
     public Slider difficultySlider;
-	float prevDifficulty;
+    private string prevDifficulty = "pDifficulty";
+    private string firstTimeStart = "firstTime";
     // Use this for initialization
     void Start () {
-		prevDifficulty = .25f;
-//		InitScoreBoard ();
+        if (PlayerPrefs.GetInt(firstTimeStart) == 0)
+        {
+            difficultySlider.value = 0.25f;
+            PlayerPrefs.SetInt(firstTimeStart, 1);
+        }
+        else
+            difficultySlider.value = PlayerPrefs.GetFloat(prevDifficulty);
+        //		InitScoreBoard ();
         Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
     }
 
@@ -29,17 +36,17 @@ public class MainMenu : MonoBehaviour {
 	}
 
 	void Awake() {
-//		resetScoreBoard ();
-	}
+        //		resetScoreBoard ();
+    }
 
 	// Update is called once per frame
 	void Update () {
-		if (difficultySlider.value != prevDifficulty) {
+		if (difficultySlider.value != PlayerPrefs.GetFloat(prevDifficulty)) {
 			InitScoreBoard ();
-			prevDifficulty = difficultySlider.value;
 		}
         string difficultyKey = "difficulty";
         PlayerPrefs.SetFloat(difficultyKey, 1.0f - difficultySlider.value);
+        PlayerPrefs.SetFloat(prevDifficulty, difficultySlider.value);
     }
 
 	public void resetScoreBoard() {
