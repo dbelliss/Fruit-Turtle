@@ -15,38 +15,9 @@ Platform assembly: C:\_Unity\Fruit-Turtle\Builds\SmileyTurtle'sFruitHunt_Data\Ma
 Loading C:\_Unity\Fruit-Turtle\Builds\SmileyTurtle'sFruitHunt_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
 Platform assembly: C:\_Unity\Fruit-Turtle\Builds\SmileyTurtle'sFruitHunt_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
 Loading C:\_Unity\Fruit-Turtle\Builds\SmileyTurtle'sFruitHunt_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
-- Completed reload, in  0.017 seconds
+- Completed reload, in  0.016 seconds
 Platform assembly: C:\_Unity\Fruit-Turtle\Builds\SmileyTurtle'sFruitHunt_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: C:\_Unity\Fruit-Turtle\Builds\SmileyTurtle'sFruitHunt_Data\Managed\System.dll (this message is harmless)
 desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
 <RI> Initializing input.
 <RI> Input initialized.
-<RI> Initialized touch support.
-UnloadTime: 4.024555 ms
-The referenced script on this Behaviour (Game Object 'GameManager') is missing!
- 
-(Filename:  Line: 1743)
-
-Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 10.568994 ms
-
-Unloading 5 unused Assets to reduce memory usage. Loaded Objects now: 466.
-Total: 0.541834 ms (FindLiveObjects: 0.035693 ms CreateObjectMapping: 0.040374 ms MarkObjects: 0.444994 ms  DeleteObjects: 0.018431 ms)
-
-YOU WIN
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-mmmm
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 1.323867 ms
-
-Unloading 85 unused Assets to reduce memory usage. Loaded Objects now: 377.
-Total: 1.493848 ms (FindLiveObjects: 0.072849 ms CreateObjectMapping: 0.066120 ms MarkObjects: 0.661494 ms  DeleteObjects: 0.688703 ms)
-
-Setting up 2 worker threads for Enlighten.
-  Thread -> id: 263c -> priority: 1 
-  Thread -> id: 172c -> priority: 1 
