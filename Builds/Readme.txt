@@ -1,10 +1,14 @@
 Smiley Turtle's Fruit Hunt!
 
-Collect 10 fruits as fast as possible. For every dynamite that hits the ground, you need to collect an extra fruit. 
+Collect 10 fruits as fast as possible. For every dynamite that hits the ground, you need to collect an extra fruit.
 
-Arrow keys or AD to move left and right. Mouse to aim tool. Right click to switch tool, left click to use tool.
+Shoot dynamites in the air to explode them but avoid shooting fruits.
+
+Arrow keys or A D to move left and right. Mouse to aim tool. Right click to switch tool, left click to use tool.
 
 Tools: Cannon, Telekinesis
+
+To reset high scores press the reset button in the lower right-hand side of the menu.
 
 Art by:
 Eliza Tsang
