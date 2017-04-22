@@ -16,7 +16,6 @@ public class ScoreManager : MonoBehaviour {
 		string highScoreKey = "HighScore"+(0+1).ToString();
 		currentHigh = PlayerPrefs.GetFloat (highScoreKey,0);
 		currentLow = PlayerPrefs.GetFloat ("HighScore5",0);
-		Debug.Log("LOW:" + currentLow.ToString());
 		highScoreText.GetComponent<Text> ().text = "High Score: " + currentHigh.ToString ();;
 	}
 

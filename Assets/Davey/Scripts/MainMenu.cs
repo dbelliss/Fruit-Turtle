@@ -24,7 +24,6 @@ public class MainMenu : MonoBehaviour {
     }
 
 	void InitScoreBoard() {
-		Debug.Log ("Initialize board");
 		float[] highScores = new float[5];
 		for (int i= 0; i < highScores.Length; i++){
 			string highScoreKey = "HighScore"+(i+1).ToString();
