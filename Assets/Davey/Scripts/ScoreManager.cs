@@ -15,9 +15,6 @@ public class ScoreManager : MonoBehaviour {
 	private GameObject inp;
 
 	[SerializeField]
-	private GameObject restartText;
-
-	[SerializeField]
 	private GameObject restartButton;
 
 	[SerializeField]
@@ -37,8 +34,8 @@ public class ScoreManager : MonoBehaviour {
 			return;
 		} 
 
-		if (scoreBoard == null || inp == null || restartText == null 
-			|| highScoreText == null || inputFieldText == null) {
+		if (scoreBoard == null || inp == null || highScoreText == null
+			|| inputFieldText == null) {
 			Debug.LogError("Error: Score manager has an unset variable");
 		}
 		instance = this;
@@ -94,7 +91,6 @@ public class ScoreManager : MonoBehaviour {
 		}
 		PlayerPrefs.Save ();
 		printHighScores ();
-		restartText.SetActive(true);
 		restartButton.SetActive (true);
 	}
 
