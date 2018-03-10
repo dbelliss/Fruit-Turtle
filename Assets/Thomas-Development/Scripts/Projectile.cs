@@ -31,12 +31,11 @@ public class Projectile : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other) {
 		if (other.tag == "PointItem") {
-			GameManager.losePoints (other.gameObject.GetComponent<Item> ().points);
+			GameManager.instance.losePoints (other.gameObject.GetComponent<Item> ().points);
 			Destroy (other.gameObject);
 			Destroy (this.gameObject);
 		}
 		else if (other.tag == "BadItem") {
-
             Instantiate(explosion, other.transform.position, Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
 			Destroy (other.gameObject);
 			Destroy (this.gameObject);

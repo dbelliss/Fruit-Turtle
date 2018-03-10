@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Basket : MonoBehaviour {
-	private AudioSource audio;
+	private AudioSource pickupSound;
 	void Start() {
-		audio = GetComponent<AudioSource> ();
+		pickupSound = GetComponent<AudioSource> ();
 	}
 	private void OnTriggerEnter2D(Collider2D other)
 	{
@@ -14,11 +14,11 @@ public class Basket : MonoBehaviour {
 
 			string tag = other.gameObject.tag;
 			if (tag == "PointItem") {
-				audio.Play ();
-				GameManager.addPoints (pts);
+				pickupSound.Play ();
+				GameManager.instance.addPoints (pts);
 				Destroy (other.gameObject);
 			} else if (tag == "BadItem") {
-				GameManager.losePoints (pts);
+				GameManager.instance.losePoints (pts);
 				Destroy (other.gameObject);
 			} else {
 				Debug.Log ("UNKNOWN TAG: " + tag);

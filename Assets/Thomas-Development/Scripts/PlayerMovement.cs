@@ -6,42 +6,55 @@ public class PlayerMovement : MonoBehaviour {
 
     private Rigidbody2D playerRB;
     public float speed = 100.0f;
-	private Transform trans;
 	bool isMovingRight = true;
 	// Use this for initialization
 	void Start () {
-		
         playerRB = GetComponent<Rigidbody2D>();
-		trans = GetComponent<Transform> ();
+
+		#if UNITY_IOS || UNITY_ANDROID
+		Input.multiTouchEnabled = true; //enabled Multitouch
+		#endif
 	}
 
-	void flip() {
-		trans.localScale = new Vector3 (trans.localScale.x * -1, trans.localScale.y);
+	void Flip() {
+		transform.localScale = new Vector3 (transform.localScale.x * -1, transform.localScale.y);
 		isMovingRight = !isMovingRight;
-	}
-	// Update is called once per frame
-	void Update () {
-		if (Input.GetAxis("Horizontal") > 0) {
-			if (isMovingRight == false) {
-				flip ();
-			}
-		}
-		else if (Input.GetAxis("Horizontal") < 0){
-			if (isMovingRight == true){
-				flip();
-			}
-		}
-		else {
-			//do not change
-		}
 	}
 
     private void FixedUpdate()
     {
-        float horizontalMovement;
+		
         Vector3 movement;
-        horizontalMovement = Input.GetAxis("Horizontal");
-        movement = new Vector3(horizontalMovement, 0.0f, 0.0f);
-        playerRB.velocity = movement * speed * Time.deltaTime;
+		int hMovement = 0;
+		#if UNITY_IOS || UNITY_ANDROID
+		// Move right if touching the right half of the screen, and left if the other halfs
+		foreach (Touch t in Input.touches)
+		{
+		if (t.position.x > Screen.width/2) {
+		hMovement = 1;
+		break;
+		}
+		else if (t.position.x < Screen.width/2) {
+		hMovement = -1;
+		break;
+		}
+		}
+		#else
+		hMovement = (int)Input.GetAxisRaw ("Horizontal");
+		#endif
+		movement = new Vector3(hMovement, 0.0f, 0.0f);
+        playerRB.velocity = movement * speed;
+
+		// Adjust sprite rotation
+		if (hMovement > 0) {
+			if (isMovingRight == false) {
+				Flip ();
+			}
+		}
+		else if (hMovement < 0){
+			if (isMovingRight == true){
+				Flip();
+			}
+		}
     }
 }
