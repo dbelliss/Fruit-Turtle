@@ -31,8 +31,6 @@ public class ScoreManager : MonoBehaviour {
 
 	private string highScoreKey = string.Empty;
 
-
-
 	void Awake() {
 		if (instance != null) {
 			Debug.LogError ("Error: two GameManagers were created");

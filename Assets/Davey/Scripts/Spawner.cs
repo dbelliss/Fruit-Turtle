@@ -3,32 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Spawner : MonoBehaviour {
-	public float frequency;
-	public float goodChance;
+	[SerializeField]
+	private float frequency; // How often to spawn a new item
+	[SerializeField]
+	private float goodChance; // Chance of a fruit
+
 	public GameObject[] fruits;
 	public GameObject[] obstacles;
-	public Vector2 left;
-	public Vector2 right;
+
+	public Vector2 leftBoundary;
+	public Vector2 rightBoundary;
 
 	private BoxCollider2D bc2d;
 
 	// Use this for initialization
 	void Start () {
 		bc2d = GetComponent<BoxCollider2D> ();
-		left = this.gameObject.transform.position - new Vector3((bc2d.size.x / 2),0);
-		right = this.gameObject.transform.position + new Vector3((bc2d.size.x / 2),0);
+		leftBoundary = this.gameObject.transform.position - new Vector3((bc2d.size.x / 2),0);
+		rightBoundary = this.gameObject.transform.position + new Vector3((bc2d.size.x / 2),0);
 		StartCoroutine (spawn ());//Spawns things
-        string difficultyKey = "difficulty";
-        goodChance = PlayerPrefs.GetFloat(difficultyKey);
     }
-	
-	// Update is called once per frame
-	void Update () {
-	}
-
-	void FixedUpdate() {
-		
-	}
 
 	IEnumerator spawn() {
 		GameObject toSpawn;
@@ -41,7 +35,7 @@ public class Spawner : MonoBehaviour {
 			}
 
 			float factor = Random.Range (0f, 1f);
-			Vector2 pos = ((right - left) * factor) + left; //radomize x within range
+			Vector2 pos = ((rightBoundary - leftBoundary) * factor) + leftBoundary; //radomize x within range
 			pos.y = this.gameObject.transform.position.y;//Same y level
 			Instantiate(toSpawn, pos, Quaternion.identity); //Create
 			yield return new WaitForSeconds(frequency);

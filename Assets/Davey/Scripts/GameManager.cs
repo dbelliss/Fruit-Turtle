@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour {
 	void Start() {
 		Debug.Log ("Gamemode is " + _curGameMode);
 		curPoints = 0;
-		timeLeft = 5f; // Initialize to 30 second round
+		timeLeft = 30f; // Initialize to 30 second round
 		timeText.text = timeLeft.ToString("00");
 		StartCoroutine (CountDown ());
 		sm = ScoreManager.instance; // Get score manager instance
