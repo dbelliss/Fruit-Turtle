@@ -59,10 +59,6 @@ public class ScoreManager : MonoBehaviour {
 		else
 		{
 			// Show restart information
-			#if !(UNITY_IOS || UNITY_ANDROID)
-			// Only show restart info if not on phone
-			restartText.SetActive (true);
-			#endif
 			restartButton.SetActive (true);
 		}
 	}

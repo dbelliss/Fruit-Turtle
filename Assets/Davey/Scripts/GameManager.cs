@@ -106,6 +106,10 @@ public class GameManager : MonoBehaviour {
 
 
 	public void addPoints(int pts) {
+        if (timeLeft <= 0)
+        {
+            return;
+        }
 		curPoints += pts;
 		UpdatePoints ();
 	}
@@ -117,7 +121,11 @@ public class GameManager : MonoBehaviour {
 	}
 		
 	public void losePoints(int pts) {
-		curPoints -= pts;
+        if (timeLeft <= 0)
+        {
+            return;
+        }
+        curPoints -= pts;
 		if (curPoints < 0) {
 			curPoints = 0;
 		}

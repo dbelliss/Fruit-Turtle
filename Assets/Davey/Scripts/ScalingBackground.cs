@@ -6,7 +6,8 @@ public class ScalingBackground : MonoBehaviour {
 
 	// Scales background to camera size at start
 	void Start () {
-		SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        Screen.orientation = ScreenOrientation.LandscapeLeft; // Lock screen to landscape
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
 
 		float worldScreenHeight = Camera.main.orthographicSize * 2;
 		float worldScreenWidth = worldScreenHeight / Screen.height * Screen.width;
