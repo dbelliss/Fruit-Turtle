@@ -5,15 +5,15 @@ using UnityEngine.UI;
 
 public class ProgressBar : MonoBehaviour {
 
-    public Slider slider;
-
-	// Use this for initialization
-	void Start () {
-        slider.maxValue = GameManager.pointsToWin;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        slider.value = GameManager.GetCurrentPoints();
-	}
+//    public Slider slider;
+//
+//	// Use this for initialization
+//	void Start () {
+//		slider.maxValue = GameManager.instance.;
+//	}
+//	
+//	// Update is called once per frame
+//	void Update () {
+//        slider.value = GameManager.GetCurrentPoints();
+//	}
 }

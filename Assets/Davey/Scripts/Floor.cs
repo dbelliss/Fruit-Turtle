@@ -20,7 +20,7 @@ public class Floor : MonoBehaviour {
 		}
 		else {
 			if (other.gameObject.tag == "BadItem") {
-				GameManager.losePoints (other.gameObject.GetComponent<Item> ().points);
+				GameManager.instance.losePoints (other.gameObject.GetComponent<Item> ().points);
 			}
 			GetComponent<AudioSource> ().Play ();
 			Destroy (other.gameObject);

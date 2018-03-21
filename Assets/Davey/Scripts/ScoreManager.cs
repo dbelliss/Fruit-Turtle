@@ -2,83 +2,138 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System; // Enum
 
 public class ScoreManager : MonoBehaviour {
-	public GameObject scoreBoard;
-	public GameObject inp;
-	public GameObject restart;
-	public GameObject highScoreText;
-	private float finalScore;
-	float currentHigh;
-	float currentLow;
+
+    [SerializeField]
+    bool isMainMenu = false; // Set to true when on main menu to prevent unecessary checks
+
+	public static ScoreManager instance; // Singleton instance
+
+	[SerializeField]
+	private GameObject scoreBoard;
+
+	[SerializeField]
+	private GameObject inp;
+
+	[SerializeField]
+	private GameObject restartButton;
+
+	[SerializeField]
+	private GameObject highScoreText;
+
+	[SerializeField]
+	private Text inputFieldText;
+
+	float currentHigh; // Stores the best score
+	float currentLow; // Stores the lowest score to beat to get a high score
+
+	private string highScoreKey = string.Empty;
+
+	void Awake() {
+		if (instance != null) {
+			Debug.LogError ("Error: two GameManagers were created");
+			return;
+		} 
+
+		if (!isMainMenu && scoreBoard == null || inp == null || highScoreText == null
+			|| inputFieldText == null) {
+			Debug.LogError("Error: Score manager has an unset variable");
+		}
+		instance = this;
+	}
 
 	void Start() {
-		string highScoreKey = "HighScore"+(0+1).ToString();
-		currentHigh = PlayerPrefs.GetFloat (highScoreKey,0);
-		currentLow = PlayerPrefs.GetFloat ("HighScore5",0);
-		highScoreText.GetComponent<Text> ().text = "High Score: " + currentHigh.ToString ();;
+        if (!isMainMenu)
+        {
+            Debug.Log("Score mode is " + GameManager.instance.curGameMode);
+            highScoreKey = "HighScore" + GameManager.instance.curGameMode.ToString();
+            currentHigh = PlayerPrefs.GetInt(highScoreKey + "1", 0); // Get first on highscore list for this gamemode
+            currentLow = PlayerPrefs.GetInt(highScoreKey + "5", 0);
+            if (highScoreText != null)
+            {
+                highScoreText.GetComponent<Text>().text = "High Score: " + currentHigh.ToString();
+            }
+        }
+        else
+        {
+            // TODO 
+            highScoreKey = "HighScore" + GameManager.GameMode.CATCHER.ToString();
+        }
 	}
 
-	public void endGame() {
-		finalScore = Time.timeSinceLevelLoad;
+	public void EndGame() {
+		int finalScore = GameManager.instance.curPoints;
 		printHighScores ();
-
-		if (currentLow > finalScore) { 
-			inp.SetActive (true);
-		} else
-			restart.SetActive (true);
-			
+		if (currentLow < finalScore) { 
+			// Allow input of new high score name
+			inp.SetActive (true);   
+		} 
+		else
+		{
+			// Show restart information
+			restartButton.SetActive (true);
+		}
 	}
 
+
+	// Gets called after user finishing entering name into NameInput field
 	public void updateScoreBoard() {
 		string name = GameObject.FindWithTag ("NameInput2").GetComponent<Text> ().text;
-		Debug.Log (name);
-		inp.SetActive (false);
+		Debug.Log ("New high score by " + name); 
+		inp.SetActive (false); // Hide input field
 		float[] highScores = new float[5];
-		float score = finalScore;
+		int curScore = GameManager.instance.curPoints;
 		for (int i= 0; i < highScores.Length; i++){
-			string highScoreKey = "HighScore"+(i+1).ToString();
+			string curHighScoreKey = highScoreKey+(i+1).ToString();
 			string nameKey = "Name" + (i + 1).ToString ();
-			float highScore = PlayerPrefs.GetFloat(highScoreKey,0f); 
+			int curHighScore = PlayerPrefs.GetInt(curHighScoreKey,0); 
 			string namescore = PlayerPrefs.GetString(nameKey);
-			if(score < highScore){
-				float temp = highScore;
+			if(curScore > curHighScore){
+				int temp = curHighScore; // Score to push down
 				string stemp = namescore;
-				PlayerPrefs.SetFloat (highScoreKey, score);
+				PlayerPrefs.SetInt (curHighScoreKey, curScore);
 				PlayerPrefs.SetString (nameKey, name);
-				score = temp;
+				curScore = temp;
 				name = stemp;
 			}
 		}
 		PlayerPrefs.Save ();
 		printHighScores ();
+		restartButton.SetActive (true);
 	}
 
 	public void resetScoreBoard() {
 		float[] highScores = new float[5];
-		for (int i= 0; i < highScores.Length; i++){
-			string highScoreKey = "HighScore"+(i+1).ToString();
-			string nameKey = "Name" + (i + 1).ToString ();
-			PlayerPrefs.SetFloat (highScoreKey, 9999);
-			PlayerPrefs.SetString (nameKey, "Unknown");
+		foreach (GameManager.GameMode gameMode in Enum.GetValues(typeof(GameManager.GameMode))) {
+			for (int i = 0; i < highScores.Length; i++){
+				string highScoreKey = "HighScore" + gameMode.ToString() + (i+1).ToString();
+				string nameKey = "Name" + (i + 1).ToString ();
+				PlayerPrefs.SetInt (highScoreKey, 0);
+				PlayerPrefs.SetString (nameKey, "Unknown");
+			}
 		}
+
 	}
 
 	public void printHighScores() {
-		inp.SetActive (false);
+        if (!isMainMenu)
+        {
+            inp.SetActive(false);
+        }
+
 		Text highScoresText = scoreBoard.GetComponent<Text> ();
 		highScoresText.text = "High Scores: \n";
 		scoreBoard.SetActive (true);
 		float[] highScores = new float[5];
 		for (int i= 0; i < highScores.Length; i++){
-
-			string highScoreKey = "HighScore"+(i+1).ToString();
+			string curHighScoreKey = highScoreKey+(i+1).ToString();
 			string nameKey = "Name" + (i + 1).ToString ();
-			float highScore = PlayerPrefs.GetFloat(highScoreKey,0);
+			int highScore = PlayerPrefs.GetInt(curHighScoreKey,0);
 			string name = PlayerPrefs.GetString (nameKey, "none");
 			highScoresText.text += ((i + 1).ToString() + ": " + name.ToString() + " " 
-				+ highScore.ToString() + " seconds\n");
+				+ highScore.ToString() + "\n");
 		}
-		restart.SetActive(true);
 	}
 }
