@@ -7,12 +7,12 @@ public class ScalingBackground : MonoBehaviour {
 	// Scales background to camera size at start
 	void Awake () {
         Screen.orientation = ScreenOrientation.LandscapeLeft; // Lock screen to landscape
-        StartCoroutine(SetBackgroundSize());
+        StartCoroutine(SetBackgroundSize()); // Keep setting background size incase device is slow to rotate
 	}
 
     IEnumerator SetBackgroundSize()
     {
-        while (true)
+        for (int i = 0; i < 10; i++)
         {
             SpriteRenderer sr = GetComponent<SpriteRenderer>();
 
