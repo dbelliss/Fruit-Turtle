@@ -6,6 +6,9 @@ using System; // Enum
 
 public class ScoreManager : MonoBehaviour {
 
+    [SerializeField]
+    bool isMainMenu = false; // Set to true when on main menu to prevent unecessary checks
+
 	public static ScoreManager instance; // Singleton instance
 
 	[SerializeField]
@@ -34,7 +37,7 @@ public class ScoreManager : MonoBehaviour {
 			return;
 		} 
 
-		if (scoreBoard == null || inp == null || highScoreText == null
+		if (!isMainMenu && scoreBoard == null || inp == null || highScoreText == null
 			|| inputFieldText == null) {
 			Debug.LogError("Error: Score manager has an unset variable");
 		}
@@ -42,11 +45,22 @@ public class ScoreManager : MonoBehaviour {
 	}
 
 	void Start() {
-		Debug.Log ("Game mode is " + GameManager.instance.curGameMode);
-		highScoreKey = "HighScore" + GameManager.instance.curGameMode.ToString ();
-		currentHigh = PlayerPrefs.GetInt (highScoreKey + "1",0); // Get first on highscore list for this gamemode
-		currentLow = PlayerPrefs.GetInt (highScoreKey + "5",0);
-		highScoreText.GetComponent<Text> ().text = "High Score: " + currentHigh.ToString ();;
+        if (!isMainMenu)
+        {
+            Debug.Log("Score mode is " + GameManager.instance.curGameMode);
+            highScoreKey = "HighScore" + GameManager.instance.curGameMode.ToString();
+            currentHigh = PlayerPrefs.GetInt(highScoreKey + "1", 0); // Get first on highscore list for this gamemode
+            currentLow = PlayerPrefs.GetInt(highScoreKey + "5", 0);
+            if (highScoreText != null)
+            {
+                highScoreText.GetComponent<Text>().text = "High Score: " + currentHigh.ToString();
+            }
+        }
+        else
+        {
+            // TODO 
+            highScoreKey = "HighScore" + GameManager.GameMode.CATCHER.ToString();
+        }
 	}
 
 	public void EndGame() {
@@ -54,7 +68,7 @@ public class ScoreManager : MonoBehaviour {
 		printHighScores ();
 		if (currentLow < finalScore) { 
 			// Allow input of new high score name
-			inp.SetActive (true);
+			inp.SetActive (true);   
 		} 
 		else
 		{
@@ -93,7 +107,7 @@ public class ScoreManager : MonoBehaviour {
 	public void resetScoreBoard() {
 		float[] highScores = new float[5];
 		foreach (GameManager.GameMode gameMode in Enum.GetValues(typeof(GameManager.GameMode))) {
-			for (int i= 0; i < highScores.Length; i++){
+			for (int i = 0; i < highScores.Length; i++){
 				string highScoreKey = "HighScore" + gameMode.ToString() + (i+1).ToString();
 				string nameKey = "Name" + (i + 1).ToString ();
 				PlayerPrefs.SetInt (highScoreKey, 0);
@@ -104,7 +118,11 @@ public class ScoreManager : MonoBehaviour {
 	}
 
 	public void printHighScores() {
-		inp.SetActive (false);
+        if (!isMainMenu)
+        {
+            inp.SetActive(false);
+        }
+
 		Text highScoresText = scoreBoard.GetComponent<Text> ();
 		highScoresText.text = "High Scores: \n";
 		scoreBoard.SetActive (true);
