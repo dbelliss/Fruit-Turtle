@@ -27,7 +27,7 @@ public class PlayerMovement : MonoBehaviour {
 		
         Vector3 movement;
 		int hMovement = 0;
-        if (SystemInfo.deviceType == DeviceType.Handheld)
+        if (SystemInfo.deviceType == DeviceType.Handheld && GameManager.instance.curGameMode == GameManager.GameMode.CATCHER)
         {
             // Move right if touching the right half of the screen, and left if the other halfs
             foreach (Touch t in Input.touches)
@@ -44,9 +44,8 @@ public class PlayerMovement : MonoBehaviour {
                 }
             }
         }
-        else if (GameManager.instance.curGameMode == GameManager.GameMode.DEFENDER)
+        else if (SystemInfo.deviceType == DeviceType.Handheld && GameManager.instance.curGameMode == GameManager.GameMode.DEFENDER)
         {
-            Debug.Log(playerShootScript.GetDirection().x);
             if (playerShootScript.GetDirection().x > 0.1)
             {
                 hMovement = 1;
