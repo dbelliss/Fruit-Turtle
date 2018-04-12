@@ -5,7 +5,7 @@ using UnityEngine;
 public class Projectile : MonoBehaviour {
 
     Rigidbody2D cannonballRB;
-    public float speed;
+    private float speed;
     private PlayerShoot playerShootScript;
     private Vector3 cannonDirection;
     public GameObject explosion;
@@ -18,6 +18,7 @@ public class Projectile : MonoBehaviour {
         cannonballRB = GetComponent<Rigidbody2D>();
         playerShootScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerShoot>();
         cannonDirection = playerShootScript.GetDirection();
+        speed = playerShootScript.cannonSpeed;
         cannonballRB.velocity = cannonDirection * speed * Time.deltaTime;
         worldSpaceCanvas = WorldSpaceCanvas.instance; // Attach new text to world space canvas
         Destroy(gameObject, destroyTime);
