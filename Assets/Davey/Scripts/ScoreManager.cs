@@ -47,7 +47,6 @@ public class ScoreManager : MonoBehaviour {
 	void Start() {
         if (!isMainMenu)
         {
-            Debug.Log("Score mode is " + GameManager.instance.curGameMode);
             highScoreKey = "HighScore" + GameManager.instance.curGameMode.ToString();
             currentHigh = PlayerPrefs.GetInt(highScoreKey + "1", 0); // Get first on highscore list for this gamemode
             currentLow = PlayerPrefs.GetInt(highScoreKey + "5", 0);
@@ -65,7 +64,7 @@ public class ScoreManager : MonoBehaviour {
 
 	public void EndGame() {
 		int finalScore = GameManager.instance.curPoints;
-		printHighScores ();
+		PrintCurGameModeHighScores ();
 		if (currentLow < finalScore) { 
 			// Allow input of new high score name
 			inp.SetActive (true);   
@@ -87,7 +86,7 @@ public class ScoreManager : MonoBehaviour {
 		int curScore = GameManager.instance.curPoints;
 		for (int i= 0; i < highScores.Length; i++){
 			string curHighScoreKey = highScoreKey+(i+1).ToString();
-			string nameKey = "Name" + (i + 1).ToString ();
+            string nameKey = "Name" + GameManager.instance.curGameMode.ToString() + (i + 1).ToString ();
 			int curHighScore = PlayerPrefs.GetInt(curHighScoreKey,0); 
 			string namescore = PlayerPrefs.GetString(nameKey);
 			if(curScore > curHighScore){
@@ -100,7 +99,7 @@ public class ScoreManager : MonoBehaviour {
 			}
 		}
 		PlayerPrefs.Save ();
-		printHighScores ();
+        PrintCurGameModeHighScores ();
 		restartButton.SetActive (true);
 	}
 
@@ -109,31 +108,55 @@ public class ScoreManager : MonoBehaviour {
 		foreach (GameManager.GameMode gameMode in Enum.GetValues(typeof(GameManager.GameMode))) {
 			for (int i = 0; i < highScores.Length; i++){
 				string highScoreKey = "HighScore" + gameMode.ToString() + (i+1).ToString();
-				string nameKey = "Name" + (i + 1).ToString ();
+                string nameKey = "Name" + gameMode.ToString() + (i + 1).ToString ();
 				PlayerPrefs.SetInt (highScoreKey, 0);
 				PlayerPrefs.SetString (nameKey, "Unknown");
 			}
 		}
-
 	}
 
-	public void printHighScores() {
+    public void PrintCurGameModeHighScores() {
         if (!isMainMenu)
         {
             inp.SetActive(false);
         }
+        highScoreKey = "HighScore" + GameManager.instance.curGameMode.ToString();
+        Text highScoresText = scoreBoard.GetComponent<Text> ();
+        highScoresText.text = "High Scores: \n";
+        scoreBoard.SetActive (true);
+        float[] highScores = new float[5];
+        for (int i= 0; i < highScores.Length; i++){
+            string curHighScoreKey = highScoreKey+(i+1).ToString();
+            string nameKey = "Name" + GameManager.instance.curGameMode.ToString() + (i + 1).ToString ();
+            int highScore = PlayerPrefs.GetInt(curHighScoreKey,0);
+            string name = PlayerPrefs.GetString (nameKey, "none");
+            highScoresText.text += ((i + 1).ToString() + ": " + name.ToString() + " " 
+                + highScore.ToString() + "\n");
+        }
+    }
 
-		Text highScoresText = scoreBoard.GetComponent<Text> ();
-		highScoresText.text = "High Scores: \n";
-		scoreBoard.SetActive (true);
-		float[] highScores = new float[5];
-		for (int i= 0; i < highScores.Length; i++){
-			string curHighScoreKey = highScoreKey+(i+1).ToString();
-			string nameKey = "Name" + (i + 1).ToString ();
-			int highScore = PlayerPrefs.GetInt(curHighScoreKey,0);
-			string name = PlayerPrefs.GetString (nameKey, "none");
-			highScoresText.text += ((i + 1).ToString() + ": " + name.ToString() + " " 
-				+ highScore.ToString() + "\n");
-		}
-	}
+    public void PrintHighScores(GameManager.GameMode gameMode) {
+        if (!isMainMenu)
+        {
+            inp.SetActive(false);
+        }
+        highScoreKey = "HighScore" + gameMode.ToString();
+        Text highScoresText = scoreBoard.GetComponent<Text> ();
+        highScoresText.text = "High Scores: \n";
+        scoreBoard.SetActive (true);
+        float[] highScores = new float[5];
+        for (int i= 0; i < highScores.Length; i++){
+            string curHighScoreKey = highScoreKey+(i+1).ToString();
+            string nameKey = "Name" + gameMode.ToString() + (i + 1).ToString ();
+            int highScore = PlayerPrefs.GetInt(curHighScoreKey,0);
+            string name = PlayerPrefs.GetString (nameKey, "none");
+            highScoresText.text += ((i + 1).ToString() + ": " + name.ToString() + " " 
+                + highScore.ToString() + "\n");
+        }
+    }
+
+    // Print highscores for the given game mode
+    public void PrintHighScores(int gameModeNum) {
+        PrintHighScores ((GameManager.GameMode)gameModeNum); // Print cur gamemode
+    }
 }

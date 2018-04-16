@@ -27,9 +27,8 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public enum GameMode {
+        CATCHER,
 		DEFENDER,
-		CATCHER,
-		COOPCATCHER
 	}
 
 	[SerializeField]
@@ -68,7 +67,7 @@ public class GameManager : MonoBehaviour {
 		Debug.Log ("Gamemode is " + _curGameMode);
 		curPoints = 0;
 		timeLeft = 30f; // Initialize to 30 second round
-		timeText.text = timeLeft.ToString("00");
+		timeText.text = "Time left: " + timeLeft.ToString("00");
 		StartCoroutine (CountDown ());
 		sm = ScoreManager.instance; // Get score manager instance
 	}
@@ -76,12 +75,12 @@ public class GameManager : MonoBehaviour {
 	IEnumerator CountDown() {
 		while (timeLeft >= 5) {
 			timeLeft -= 1;
-			timeText.text = timeLeft.ToString("00");
+            timeText.text = "Time left: " + timeLeft.ToString("00");
 			yield return new WaitForSeconds (1f);
 		}
 		while (timeLeft > 0.01) {
 			timeLeft -= .1f;
-			timeText.text = timeLeft.ToString("0.0");
+            timeText.text = "Time left: " +  timeLeft.ToString("0.0");
 			yield return new WaitForSeconds (.1f);
 		}
 		EndGame ();
@@ -135,5 +134,11 @@ public class GameManager : MonoBehaviour {
     public int GetCurrentPoints()
     {
         return curPoints;
+    }
+
+    public void ChangeGameMode(int newGameModeNum) {
+        Debug.Log ("Changing game mode from " + curGameMode);
+        _curGameMode = (GameManager.GameMode)newGameModeNum; // Convert num to gameMode and set as cur game mode
+        Debug.Log ("to " + curGameMode);
     }
 }

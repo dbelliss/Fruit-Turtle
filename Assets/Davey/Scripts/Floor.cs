@@ -19,9 +19,9 @@ public class Floor : MonoBehaviour {
 			return;
 		}
 		else {
-			if (other.gameObject.tag == "BadItem") {
-				GameManager.instance.losePoints (other.gameObject.GetComponent<Item> ().points);
-			}
+			//if (other.gameObject.tag == "BadItem") {
+   //             GameManager.instance.losePoints(other.gameObject.GetComponent<Item>().points);
+   //         }
 			GetComponent<AudioSource> ().Play ();
 			Destroy (other.gameObject);
 		}
