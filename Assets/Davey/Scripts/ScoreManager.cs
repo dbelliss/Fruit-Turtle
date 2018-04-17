@@ -18,7 +18,7 @@ public class ScoreManager : MonoBehaviour {
 	private GameObject inp;
 
 	[SerializeField]
-	private GameObject restartButton;
+	private GameObject[] restartButtons;
 
 	[SerializeField]
 	private GameObject highScoreText;
@@ -72,7 +72,9 @@ public class ScoreManager : MonoBehaviour {
 		else
 		{
 			// Show restart information
-			restartButton.SetActive (true);
+            foreach (GameObject go in restartButtons) {
+                go.SetActive (true);
+            }
 		}
 	}
 
@@ -100,7 +102,10 @@ public class ScoreManager : MonoBehaviour {
 		}
 		PlayerPrefs.Save ();
         PrintCurGameModeHighScores ();
-		restartButton.SetActive (true);
+
+        foreach (GameObject go in restartButtons) {
+            go.SetActive (true);
+        }
 	}
 
 	public void resetScoreBoard() {
