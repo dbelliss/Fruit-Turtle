@@ -115,7 +115,7 @@ public class GameManager : MonoBehaviour {
 
 	private void EndGame() {
 		timeLeft = 0;
-		timeText.text = "0.0";
+		timeText.text = "Time left: 0.0";
 		sm.EndGame ();
 	}
 		
@@ -141,4 +141,9 @@ public class GameManager : MonoBehaviour {
         _curGameMode = (GameManager.GameMode)newGameModeNum; // Convert num to gameMode and set as cur game mode
         Debug.Log ("to " + curGameMode);
     }
+
+    public void RestartLevel() {
+        SceneManager.LoadScene (SceneManager.GetActiveScene ().buildIndex);
+    }
+
 }

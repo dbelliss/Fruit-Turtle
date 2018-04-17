@@ -37,8 +37,8 @@ public class ScoreManager : MonoBehaviour {
 			return;
 		} 
 
-		if (!isMainMenu && scoreBoard == null || inp == null || highScoreText == null
-			|| inputFieldText == null) {
+		if (!isMainMenu && (scoreBoard == null || inp == null || highScoreText == null
+            || inputFieldText == null)) {
 			Debug.LogError("Error: Score manager has an unset variable");
 		}
 		instance = this;
