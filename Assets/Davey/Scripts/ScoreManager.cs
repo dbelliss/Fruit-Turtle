@@ -122,7 +122,7 @@ public class ScoreManager : MonoBehaviour {
         }
         highScoreKey = "HighScore" + GameManager.instance.curGameMode.ToString();
         Text highScoresText = scoreBoard.GetComponent<Text> ();
-        highScoresText.text = "High Scores: \n";
+        highScoresText.text = "High Scores:\n";
         scoreBoard.SetActive (true);
         float[] highScores = new float[5];
         for (int i= 0; i < highScores.Length; i++){
@@ -142,7 +142,7 @@ public class ScoreManager : MonoBehaviour {
         }
         highScoreKey = "HighScore" + gameMode.ToString();
         Text highScoresText = scoreBoard.GetComponent<Text> ();
-        highScoresText.text = "High Scores: \n";
+        highScoresText.text = "High Scores:\n";
         scoreBoard.SetActive (true);
         float[] highScores = new float[5];
         for (int i= 0; i < highScores.Length; i++){
